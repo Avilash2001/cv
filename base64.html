@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Avilash Base 64 Converter</title>
+  </head>
+  <body style="display: flex; flex-direction: column">
+    <label for="image" style="font-size: x-large; font-weight: bolder"
+      >Upload Image</label
+    >
+    <input
+      style="margin-top: 1rem"
+      type="file"
+      name="image"
+      id="image"
+      accept="image/*"
+    />
+
+    <img
+      style="height: 20rem; object-fit: contain; display: none"
+      id="imagePrev"
+      alt="image"
+    />
+
+    <h2>Base 64</h2>
+
+    <textarea
+      name="base64"
+      id="base64"
+      cols="30"
+      rows="10"
+      style="margin-top: 1rem"
+    >
+    </textarea>
+
+    <button style="margin-top: 1rem" id="copyToClipBoard">
+      Copy to clipboard
+    </button>
+  </body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script>
+    $("#image").on("change", function () {
+      var file = this.files[0];
+      var reader = new FileReader();
+      reader.onload = function (e) {
+        var data = e.target.result;
+        var base64result = "data:image/jpeg;base64," + btoa(data);
+        console.log(base64result);
+        $("#base64").html(base64result);
+      };
+      reader.readAsBinaryString(file);
+      $("#imagePrev").attr("src", URL.createObjectURL(file));
+      $("#imagePrev").show();
+    });
+
+    $("#copyToClipBoard").on("click", function () {
+      var $temp = $("<input>");
+      $("body").append($temp);
+      $temp.val($("#base64").val()).select();
+      document.execCommand("copy");
+      $temp.remove();
+    });
+  </script>
+</html>

@@ -126,6 +126,10 @@ a:hover{
     color: #eaf6f6;
 }
 
+#linkToBase:hover{
+    color:#11999E;
+}
+
 hr{
     border-style: dotted none none none;
     border-width: 10px;
